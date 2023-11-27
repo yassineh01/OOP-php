@@ -33,19 +33,16 @@ class Database
 
     public function Select($id = null)
     {
+        $sql = "SELECT * FROM Leerlingen";
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetchAll();
+
         if ($id !== null) {
-            $sql = "SELECT * FROM klanten WHERE id = :id";
+            $sql = "SELECT * FROM Leerlingen WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':id', $id);
-            $stmt->execute();
             $result = $stmt->fetch();
-            return $result;
-        } else {
-            $sql = "SELECT * FROM klanten";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
-            return $result;
         }
+        return $result;
     }
 }
