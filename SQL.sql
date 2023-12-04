@@ -13,3 +13,6 @@ CREATE TABLE leerlingen
 INSERT INTO leerlingen (naam, achternaam, email, geboorte_datum)
 VALUES
 ('Jan', 'Janssens', 'jan@janssens', '1990-01-01');
+INSERT INTO leerlingen (naam, achternaam, email, geboorte_datum)
+VALUES
+('Mus', 'Ha', 'Muha@ha.com', '1999-01-01');

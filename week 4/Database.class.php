@@ -4,18 +4,13 @@ class Database
 {
     public $pdo;
 
-    public function __construct($servername = 'localhost', $username = 'root', $password = 'QweMus?!123!', $dbname = 'OOP')
+    public function __construct(string $servername = 'localhost', string $username = 'root', string $password = 'QweMus?!123!', string $dbname = 'OOP')
     {
-        try {
-            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connected successfully";
-        } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-        }
+        $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function toevoegen($naam, $achternaam, $email, $geboortedatum)
+    public function toevoegen(string $naam, string $achternaam, string $email, string $geboortedatum)
     {
         try {
             $sql = "INSERT INTO klanten (naam, achternaam, email, geboortedatum) VALUES (:naam, :achternaam, :email, :geboortedatum)";
@@ -31,34 +26,36 @@ class Database
         }
     }
 
-    public function Select($id = null)
+    public function Select(int $id = null)
     {
-        $sql = "SELECT * FROM Leerlingen";
-        $stmt = $this->pdo->query($sql);
-        $result = $stmt->fetchAll();
-
         if ($id !== null) {
             $sql = "SELECT * FROM Leerlingen WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(':id', $id);
+            $stmt->execute();
             $result = $stmt->fetch();
+            return $result;
         }
-        return $result;
+        $sql = "SELECT * FROM Leerlingen";
+        $stmt = $this->pdo->query($sql);
+        $results = $stmt->fetchAll();
+        return $results;
     }
 
-    public function Update($id, $naam, $achternaam, $email, $geboortedatum)
+
+    public function Update(int $id, string $naam, string $achternaam, string $email, string $geboortedatum)
     {
-        $sql = "UPDATE Leerlingen SET naam = :naam, achternaam = :achternaam, email = :email, geboortedatum = :geboortedatum WHERE id = :id";
+        $sql = "UPDATE Leerlingen SET naam = :naam, achternaam = :achternaam, email = :email, geboorte_datum = :geboorte_datum WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':naam', $naam);
         $stmt->bindParam(':achternaam', $achternaam);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':geboortedatum', $geboortedatum);
+        $stmt->bindParam(':geboorte_datum', $geboortedatum);
         $stmt->execute();
     }
 
-    public function Delete($id)
+    public function Delete(int $id)
     {
         $sql = "DELETE FROM Leerlingen WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
