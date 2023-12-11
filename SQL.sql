@@ -10,6 +10,14 @@ CREATE TABLE leerlingen
     geboorte_datum date not null
 );
 
+CREATE TABLE log
+(
+	id int primary key auto_increment,
+    user_name varchar(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
 INSERT INTO leerlingen (naam, achternaam, email, geboorte_datum)
 VALUES
 ('Jan', 'Janssens', 'jan@janssens', '1990-01-01');
