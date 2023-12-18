@@ -4,7 +4,7 @@ class Database
 {
     public $pdo;
 
-    public function __construct($servername = 'localhost', $username = 'root', $password = 'QweMus?!123!', $dbname = 'shop')
+    public function __construct($servername = 'localhost', $username = 'root', $password = '', $dbname = 'shop')
     {
         try {
             $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
